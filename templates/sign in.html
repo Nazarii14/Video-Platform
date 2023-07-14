@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/sign-in.css') }}">
+    <script defer src="sign-in-scripts.js"></script>
+    <title>Sign in - WatchLink</title>
+</head>
+<body>
+    <div class="container" id="container">
+      <div class="form-container sign-in-container">
+        <form method="POST" action="">
+            <h1>Sign In</h1>
+            <div class="social-container">
+                <a href="#" class="social"><i class="fa fa-facebook"></i></a>
+                <a href="#" class="social"><i class="fa fa-google"></i></a>
+                <a href="#" class="social"><i class="fa fa-linkedin"></i></a>
+            </div>
+
+            <span>or use your account</span>
+
+            <div class="inputs">
+                <div class="input">
+                    {{ form.email(id="email", placeholder="Email") }}
+                </div>
+                <div class="input">
+                    {{ form.password(id="password", placeholder="Password") }}
+                </div>
+            </div>
+
+            <a href="{{ url_for('register') }}">Forgot your Password?</a>
+
+            <button>Sign in</button>
+        </form>
+    </div>
+    <div class="overlay-container">
+        <div class="overlay">
+           <div class="overlay-panel overlay-right">
+                <h1>Hello, Friend!</h1>
+                <p>Enter your details and start your journey with us</p>
+                <button class="border" id="signUp" onclick="window.location.href='{{ url_for('register') }}'">Sign Up</button>
+            </div>
+        </div>
+    </div>
+    </div>
+</body>
+</html>
