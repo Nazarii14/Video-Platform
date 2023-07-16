@@ -1,8 +1,10 @@
 from datetime import datetime
+
 from flask import Flask, render_template, url_for, flash, redirect, session, abort, request
-from forms import RegistrationForm, LoginForm
 from flask_sqlalchemy import SQLAlchemy
 from authlib.integrations.flask_client import OAuth
+
+from forms import RegistrationForm, LoginForm
 
 
 app = Flask(__name__, static_url_path='/static', static_folder='static')
@@ -14,7 +16,6 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///watchlink.db'
 db = SQLAlchemy(app)
 
 oauth = OAuth(app)
-
 
 google = oauth.register(
     name='google',
@@ -32,44 +33,6 @@ google = oauth.register(
     },
     issuer='https://accounts.google.com'
 )
-
-CLIENT_ID_FACEBOOK = 294032019865535
-CLIENT_SECRET_FACEBOOK = "9228e7da8d1cc3097ae9f9664d5ee22f"
-
-
-facebook = oauth.register(
-    'facebook',
-    consumer_key=CLIENT_ID_FACEBOOK,
-    consumer_secret=CLIENT_SECRET_FACEBOOK,
-    request_token_params={'scope': 'email'},
-    base_url='https://graph.facebook.com/',
-    request_token_url=None,
-    access_token_url='/oauth/access_token',
-    authorize_url='https://www.facebook.com/dialog/oauth'
-)
-
-
-class User(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(20), unique=True, nullable=False)
-    email = db.Column(db.String(60), unique=True, nullable=False)
-    image_file = db.Column(db.String(20), nullable=False, default="default.jpg")
-    password = db.Column(db.String(60), nullable=False)
-    videos = db.relationship('Video', backref='author', lazy=True)
-
-    def __repr__(self):
-        return f"User ('{self.username}', '{self.email}', '{self.image_file}')"
-
-
-class Video(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(100), nullable=False)
-    date_posted = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
-    content = db.Column(db.Text, nullable=False)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
-
-    def __repr__(self):
-        return f"Video ('{self.title}', '{self.date_posted}', '{self.image_file}')"
 
 
 simple_data = [
@@ -152,27 +115,6 @@ def google_authorize():
 def logout():
     session.clear()
     return redirect("/")
-
-
-# to do
-@app.route("/facebook_login")
-def facebook_login():
-    return redirect(url_for('facebook_authorized', callback=url_for('facebook_authorized', _external=True)))
-
-
-# to do
-@app.route('/facebook-authorized')
-def facebook_authorized():
-    response = facebook.authorized_response()
-    if response is None or response.get('access_token') is None:
-        return 'Access denied: reason={}, error={}'.format(
-            request.args['error_reason'],
-            request.args['error_description']
-        )
-
-    session['facebook_token'] = (response['access_token'], '')
-
-    return redirect(url_for('/'))
 
 
 if __name__ == "__main__":
