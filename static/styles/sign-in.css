@@ -84,8 +84,13 @@ input {
 	background-color: #eee;
 	border: none;
 	padding: 12px 15px;
-	margin: 8px 0;
-	width: 100%;
+	margin: 10px 0;
+	width: 130%;
+	border-radius: 10px;
+}
+
+.inputs{
+	margin-right: 50px;
 }
 
 .container {
@@ -164,8 +169,10 @@ input {
 .social-container {
 	margin: 20px 0;
 }
-
 .social-container a {
+margin-left: 12px;
+}
+/* .social-container a {
 	border: 1px solid #DDDDDD;
 	border-radius: 50%;
 	display: inline-flex;
@@ -174,4 +181,4 @@ input {
 	margin: 0 5px;
 	height: 40px;
 	width: 40px;
-}
+} */

@@ -69,6 +69,10 @@ button.ghost {
 	border-color: #FFFFFF;
 }
 
+.signUp{
+	margin-top: 0px;
+}
+
 form {
 	background-color: #FFFFFF;
 	display: flex;
@@ -80,12 +84,17 @@ form {
 	text-align: center;
 }
 
+.inputs{
+	margin-right: 50px;
+}
+
 input {
 	background-color: #eee;
 	border: none;
 	padding: 12px 15px;
-	margin: 8px 0;
-	width: 100%;
+	margin: 10px 0;
+	width: 130%;
+	border-radius: 10px;
 }
 
 .container {
@@ -166,16 +175,9 @@ input {
 
 
 .social-container {
-	margin: 20px 0;
+	margin: 15px 0;
 }
 
 .social-container a {
-	border: 1px solid #DDDDDD;
-	border-radius: 50%;
-	display: inline-flex;
-	justify-content: center;
-	align-items: center;
-	margin: 0 5px;
-	height: 40px;
-	width: 40px;
+	margin-left: 10px;
 }

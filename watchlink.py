@@ -1,7 +1,9 @@
+from datetime import datetime
 from flask import Flask, render_template, url_for, flash, redirect, session, abort, request
 from forms import RegistrationForm, LoginForm
 from flask_sqlalchemy import SQLAlchemy
 from authlib.integrations.flask_client import OAuth
+
 
 app = Flask(__name__, static_url_path='/static', static_folder='static')
 app.app_context().push()
@@ -10,9 +12,7 @@ app.config['SECRET_KEY'] = '2f23a88461aa5335f22200988f1ece8e1dcd731f58f1bb13e0da
 # Database, the following line means that database will be created in project directory
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///watchlink.db'
 db = SQLAlchemy(app)
-from models import User, Video
 
-# Creating authentification object
 oauth = OAuth(app)
 
 
@@ -47,6 +47,30 @@ facebook = oauth.register(
     access_token_url='/oauth/access_token',
     authorize_url='https://www.facebook.com/dialog/oauth'
 )
+
+
+class User(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(20), unique=True, nullable=False)
+    email = db.Column(db.String(60), unique=True, nullable=False)
+    image_file = db.Column(db.String(20), nullable=False, default="default.jpg")
+    password = db.Column(db.String(60), nullable=False)
+    videos = db.relationship('Video', backref='author', lazy=True)
+
+    def __repr__(self):
+        return f"User ('{self.username}', '{self.email}', '{self.image_file}')"
+
+
+class Video(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(100), nullable=False)
+    date_posted = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    content = db.Column(db.Text, nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+
+    def __repr__(self):
+        return f"Video ('{self.title}', '{self.date_posted}', '{self.image_file}')"
+
 
 simple_data = [
     {
