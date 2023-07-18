@@ -1,22 +1,12 @@
-from datetime import datetime
-
-from flask import Flask, render_template, url_for, flash, redirect, session, abort, request
-from flask_sqlalchemy import SQLAlchemy
 from authlib.integrations.flask_client import OAuth
+from watchlink.models import User, Video
+from watchlink import app, db, bcrypt
+from flask import render_template, url_for, flash, redirect, session, abort, request
+from watchlink.forms import RegistrationForm, LoginForm
+from flask_login import login_user, current_user, logout_user, login_required
 
-from forms import RegistrationForm, LoginForm
-
-
-app = Flask(__name__, static_url_path='/static', static_folder='static')
-app.app_context().push()
-app.config['SECRET_KEY'] = '2f23a88461aa5335f22200988f1ece8e1dcd731f58f1bb13e0dadd98b5485ad4'
-
-# Database, the following line means that database will be created in project directory
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///watchlink.db'
-db = SQLAlchemy(app)
 
 oauth = OAuth(app)
-
 google = oauth.register(
     name='google',
     client_id='1028720449984-bulqio8hbjc4mej8910g9oi1tlk93hn5.apps.googleusercontent.com',
@@ -55,13 +45,15 @@ simple_data = [
 ]
 
 
+@app.route("/testing_google_login")
+def testing_google_login():
+    email = dict(session)['profile']['email']
+    return f'Hello, you are logged in as {email}!'
+
 @app.route("/")
 @app.route("/home")
 def home():
-    email = dict(session)['profile']['email']
-    return f'Hello, you are logged in as {email}!'
-#    return render_template("home.html", videos=simple_data)
-
+    return render_template("home.html", videos=simple_data)
 
 @app.route("/about")
 def about():
@@ -71,20 +63,36 @@ def about():
 # register account in watchlink
 @app.route("/register", methods=['GET', 'POST'])
 def register():
+    if current_user.is_authenticated:
+        return redirect(url_for('home'))
     form = RegistrationForm()
     if form.validate_on_submit():
-        flash(f'Account created for {form.username.data}!', 'success')
+
+        #hashing password, creating user and adding to database
+        hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
+        user = User(username=form.username.data, email=form.email.data, password=hashed_password)
+        db.session.add(user)
+        db.session.commit()
+
+        flash(f'Your account has been created for {form.username.data}! Encrypted password: {hashed_password}', 'success')
         return redirect(url_for('home'))
-    return render_template("sign up.html", title='Register', form=form)
+    return render_template("register.html", title='Register', form=form)
 
 
 # native app login
-@app.route("/login")
+@app.route("/login", methods=['GET', 'POST'])
 def login():
+    if current_user.is_authenticated:
+        return redirect(url_for('home'))
     form = LoginForm()
     if form.validate_on_submit():
-        flash(f'Logged in with account {form.email.data}!', 'success')
-        return redirect(url_for('home'))
+        user = User.query.filter_by(email=form.email.data).first()
+        if user and bcrypt.check_password_hash(user.password, form.password.data):
+            login_user(user, remember=form.remember.data)
+            next_page = request.args.get('next')
+            return redirect(next_page) if next_page else redirect(url_for('home'))
+        else:
+            flash(f'Login Unsuccessful. Please check email and password', 'success')
     return render_template("sign in.html", title='Login', form=form)
 
 
@@ -108,14 +116,16 @@ def google_authorize():
     session['email'] = user_info['email']
     session['profile'] = user_info
     session.permanent = True
-    return redirect('/')
+    return redirect('/testing_google_login')
 
 
 @app.route("/logout")
 def logout():
-    session.clear()
-    return redirect("/")
+    logout_user()
+    return redirect(url_for('home'))
 
+@app.route("/account")
+@login_required
+def account():
+    return render_template("account.html", title='Account')
 
-if __name__ == "__main__":
-    app.run(debug=True)

@@ -64,11 +64,37 @@ button:focus {
 	outline: none;
 }
 
-button.border {
+button.ghost {
 	background-color: transparent;
 	border-color: #FFFFFF;
 }
 
+.signGoogle{
+	background-color:rgb(247, 245, 245);
+	outline: none;
+	height: 46px;
+	width: 120px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	cursor: pointer;
+	border-radius: 20px;
+	box-shadow: 3px 6px 7px #b8b7b7;
+}
+
+.signGoogle:hover{
+	background: rgb(58,89,180);
+    background: linear-gradient(50deg, rgba(58,89,180,0.43) 19%, rgba(29,199,253,0.33) 66%, rgba(69,252,176,0.215) 100%);
+}
+.signUp{
+	margin-top: 8px;
+}
+
+.social{
+	margin-left: 10px;
+	margin-right: 10px;
+	margin-bottom: 10px;
+}
 form {
 	background-color: #FFFFFF;
 	display: flex;
@@ -80,6 +106,10 @@ form {
 	text-align: center;
 }
 
+.inputs{
+	margin-right: 50px;
+}
+
 input {
 	background-color: #eee;
 	border: none;
@@ -87,10 +117,6 @@ input {
 	margin: 10px 0;
 	width: 130%;
 	border-radius: 10px;
-}
-
-.inputs{
-	margin-right: 50px;
 }
 
 .container {
@@ -112,13 +138,18 @@ input {
 	transition: all 0.6s ease-in-out;
 }
 
-.sign-in-container {
+.sign-up-container {
 	left: 0;
 	width: 50%;
-	z-index: 2;
- } 
+	opacity: 0;
+	z-index: 1;
+	transform: translateX(100%);
+	opacity: 1;
+	z-index: 5;
+	animation: show 0.6s;
+}
 
-.overlay-container {
+.left-container {
 	position: absolute;
 	top: 0;
 	left: 50%;
@@ -127,7 +158,9 @@ input {
 	overflow: hidden;
 	transition: transform 0.6s ease-in-out;
 	z-index: 100;
+	transform: translateX(-100%);
 }
+
 
 .overlay {
 	background: #FF416C;
@@ -143,9 +176,11 @@ input {
 	width: 200%;
   	transform: translateX(0);
 	transition: transform 0.6s ease-in-out;
+	transform: translateX(50%);
 }
 
-.overlay-panel {
+
+.left-panel {
 	position: absolute;
 	display: flex;
 	align-items: center;
@@ -161,24 +196,10 @@ input {
 }
 
 
-.overlay-right {
-	right: 0;
-	transform: translateX(0);
+.social-container {
+	margin: 15px 0;
 }
 
-.social-container {
-	margin: 20px 0;
-}
 .social-container a {
-margin-left: 12px;
+	margin-left: 10px;
 }
-/* .social-container a {
-	border: 1px solid #DDDDDD;
-	border-radius: 50%;
-	display: inline-flex;
-	justify-content: center;
-	align-items: center;
-	margin: 0 5px;
-	height: 40px;
-	width: 40px;
-} */
