@@ -1,0 +1,434 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;1,500&display=swap");
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Poppins";
+  background-color: #ffb1f55e;
+}
+
+header {
+  min-height: 24vh;
+  background-color: rgba(248, 71, 195, 0.726);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  flex: 1;
+}
+
+.top-container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.top-container input[type="text"] {
+  width: 50%;
+  height: 70%;
+  padding: 6px;
+  border: none;
+  margin-top: 8px;
+  font-size: 17px;
+  border-radius: 15px;
+  border: 1px solid #ccc;
+  padding-left: 10px;
+}
+
+input:focus {
+  outline: none;
+  border: 1px solid rgb(0, 4, 255);
+}
+
+.top-container button {
+  margin-top: 8px;
+  padding: 0 10px;
+  background: rgb(238, 238, 238);
+  font-size: 22px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  margin-left: 10px;
+  color: rgb(26, 106, 255);
+}
+
+.top-container button:hover {
+  transform: scale(1.1);
+}
+
+.midlle-container {
+  display: flex;
+  align-items: center;
+}
+.midlle-container nav a {
+  margin-right: 10px;
+  color: rgb(21, 110, 187);
+  font-weight: bold;
+  font-size: 1.2vw;
+}
+
+.midlle-container nav a:hover {
+  color: rgb(0, 0, 155);
+  cursor: pointer;
+  transform: scale(1.05);
+}
+
+.bottom-container {
+  font-size: 3vw;
+  color: darkblue;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+ 
+}
+.bottom-container span {
+  color: rgb(255, 29, 187);
+  font-weight: bold;
+  margin-left: 15px;
+}
+
+.sidebar-icon {
+  position: absolute;
+  top: 0.3em;
+  left: 1em;
+  background: #db0000;
+  border-radius: 3px;
+  cursor: pointer;
+  color: #ccc;
+  font-size: 27px;
+  padding: 0 10px;
+}
+
+.sidebar {
+  /* position: absolute; */
+  top: 0.05em;
+  left: 0.05em;
+  height: 100vh;
+  width: 20vw;
+  /* background: rgb(209, 3, 147);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    border-bottom-right-radius: 20px;
+    border-top-right-radius: 20px; */
+  transition: all 0.1s ease;
+  opacity: 0;
+}
+
+.sidebar.active {
+  position: absolute;
+  top: 0.05em;
+  left: 0.05em;
+  height: 100vh;
+  width: 20vw;
+  background: rgb(209, 3, 147);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  border-bottom-right-radius: 20px;
+  border-top-right-radius: 20px;
+  z-index: 999;
+  transition: all 1s ease;
+  opacity: 1;
+}
+
+.sidebar ul a {
+  margin-top: 10px;
+  display: block;
+  height: 100%;
+  width: 100%;
+  line-height: 65px;
+  font-size: 20px;
+  color: rgb(255, 255, 255);
+  padding-left: 40px;
+  box-sizing: border-box;
+  /* border-bottom: 1px solid black; */
+  border-top: 2px solid rgba(243, 234, 234, 0.1);
+  transition: 0.4s;
+  text-decoration: none;
+}
+.sidebar ul a i {
+  margin-right: 16px;
+}
+
+#i-home {
+  margin-top: 100px;
+}
+.sidebar-header {
+  display: flex;
+  margin-top: 1em;
+  font-size: 24px;
+  color: rgb(255, 255, 255);
+  padding-left: 40px;
+  font-weight: bold;
+  justify-content: space-around;
+}
+
+.sidebar-header i {
+  cursor: pointer;
+  font-size: 28px;
+}
+.sidebar-header i:hover {
+  transform: scale(1.1);
+}
+ul li:hover a {
+  padding-left: 50px;
+}
+
+.user-icon{
+    position: absolute;
+    top: 1.3em;
+    right: 3em;
+    background-color: rgb(252, 0, 176);
+    border-radius: 60px;
+    width: 2.2em;
+    height: 2.2em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.75em;
+    color: aliceblue;
+    font-weight: bold;
+    border: 2px solid rgb(255, 57, 179);
+    cursor: pointer;
+    /* box-shadow: 0 6px 3px rgba(0, 0, 0, 0.2);
+    overflow: hidden; */
+  
+}
+
+.user-icon:hover{
+    transform: scale(1.1);
+}
+.main{
+    width: 100vw;
+    min-height: 80vh;
+    background-color:rgb(255, 193, 236);
+    position: absolute;
+    top:10em;
+}
+
+.about{
+    background-color: rgb(255, 193, 236);
+    width: 90%;
+    height: 30vh;
+    display: flex;
+    align-items: center;
+    margin: 0 auto;
+}
+.about .name-post{
+    width: 18%;
+    height: 29vh;
+    float: left;
+}
+.about .ava-joined{
+    width: 18%;
+    height: 29vh;
+    padding-left: 10px;
+    padding-top: 3px;
+}
+.about .ava-joined div{
+    display: flex;
+    justify-content: left;
+    align-items: left;
+}
+.about .name-post .nickname {
+  font-size: 2.5em;
+  color: rgb(0, 0, 184);
+  
+  text-shadow: -2px 0 0 rgb(30, 30, 30),
+               2px 0 0 rgb(30, 30, 30),
+               0 -2px 0 rgb(30, 30, 30),
+               0 2px 0 rgb(30, 30, 30);
+}
+.about .name-post .info{
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  padding-left: 5px;
+  height: 50%;
+  width: 100%;
+  font-size: 1.3em;
+}
+.about .name-post .main-info{
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  height: 50%;
+  width: 100%;
+}
+.about .ava-joined .avatar-wrapper {
+  width: 90%;
+  height: 28vh;
+  float: left;
+  margin-left: auto;
+  border-radius: 10px;
+  overflow: hidden;
+}
+.about .ava-joined .avatar-wrapper .avatar {
+  width: 100%;
+  height: 100%;
+}
+.about .text-row {
+    float: left;
+    display: flex;
+    width: 21%;
+    height: 29vh;
+    flex-direction: column;
+    justify-content: center;
+    align-items: start;
+    padding: 5px 0px 5px 10px;
+    font-size: 2em;
+    color: rgb(30, 30, 30);
+    
+}
+.about .text-row button{
+    padding-left: 20px;
+    font-size: 1.1em;
+    background: linear-gradient(to bottom, #9723CD, #FF5146);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    border: 0;
+}
+.about .text-row button:hover{
+    background: linear-gradient(to bottom, #b32af3, #a7372f);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;  
+    cursor: pointer;
+}
+.about .name-post .main-info p{
+    font-size: 0.8em;
+    color: gray;
+}
+.line{
+    margin-left: 5%;
+    margin-right: 5%;
+}
+.for-videos{
+    background-color: rgb(255, 193, 236);
+    width: 90%;
+    height: 46.8vh;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* --------------------------------- */
+.upl-video{
+    margin-left: 10px;
+    width: 40%;
+    height: 27vh;
+    border-radius: 10px;
+    border: 2px solid rgb(168, 168, 168);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.upl-video .add{
+    font-size: 1em;
+    color: gray;
+    padding-top: 10px;
+}
+.upl-video .fa-solid.fa-upload.fa-9x{
+    border: 0;
+    background-color:rgb(255, 193, 236);
+    color:  rgb(0, 0, 165);
+    padding-top: 10px;
+    font-size: 5em;
+    /* margin-left: 2em; */
+}
+.upl-video .fa-solid.fa-upload.fa-9x:hover{
+    color:  rgb(2, 2, 230);
+    cursor: pointer;
+}
+@media (max-width: 768px) {
+  .side-bar {
+    display: none;
+  }
+}
+
+
+@media screen and (max-width: 800px) {
+  .side-bar {
+    display: none;
+  }
+  .about{
+    width: 45%;
+    height: 30vh;
+}
+.about .name-post{
+    width: 9%;
+    height:29vh;
+}
+.about .ava-joined{
+    display: none;
+}
+.about .name-post .nickname {
+  font-size: 1.25em;
+  
+  text-shadow: -1px 0 0 rgb(30, 30, 30),
+               1px 0 0 rgb(30, 30, 30),
+               0 -1px 0 rgb(30, 30, 30),
+               0 1px 0 rgb(30, 30, 30);
+}
+.about .name-post .info{
+  padding-left: 5px;
+  height: 50%;
+  width: 50%;
+  font-size: 0.65em;
+}
+.about .name-post .main-info{
+  height: 50%;
+  width: 50%;
+}
+.about .ava-joined .avatar-wrapper {
+  width: 45%;
+  height: 28vh;
+  margin-left: auto;
+  border-radius: 10px;
+  overflow: hidden;
+}
+.about .text-row {
+    width: 10.5%;
+    height: 29vh;
+    padding: 5px 0px 5px 10px;
+    font-size: 1em;
+}
+.about .text-row button{
+    padding-left: 20px;
+    font-size: 0.65em;
+}
+.about .name-post .main-info p{
+    font-size: 0.4em;
+}
+.line{
+    margin-left: 5%;
+    margin-right: 5%;
+}
+.for-videos{
+    width: 45%;
+    height: 46.8vh;
+    margin: 0 auto;
+}
+.upl-video{
+    margin-left: 10px;
+    width: 20%;
+    height: 27vh;
+    border-radius: 10px;
+    border: 2px solid rgb(168, 168, 168);
+}
+.upl-video .add{
+    font-size: 0.6em;
+    color: gray;
+    padding-top: 10px;
+}
+.upl-video .fa-solid.fa-upload.fa-9x{
+    padding-top: 10px;
+    
+}
+}
+
+
+
