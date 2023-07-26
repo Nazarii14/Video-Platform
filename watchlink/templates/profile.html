@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" type="text/css" href="/watchlink/static/styles/profile-style.css" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/profile-style.css')}}" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -39,7 +39,7 @@
         </div>
         <ul>
           <li>
-            <a href="#"><i class="fas fa-home" id="i-home"></i>Home</a>
+            <a href="{{ url_for('home') }}"><i class="fas fa-home" id="i-home"></i>Home</a>
           </li>
           <li>
             <a href="#"><i class="fas fa-crown"></i>Premium</a>
@@ -64,19 +64,70 @@
         <div class="about">
             <div class="ava-joined">
               <div class="avatar-wrapper">
-                <img class="avatar" src="/watchlink/static/sources/jack1.jpg" alt="Jack">
+                <img class="avatar" src="{{ image_file }}" alt="Jack">
               </div>
             </div>
             <div class="name-post">
               <div class="main-info">
-                <h2 class="nickname">WeaRD276</h2>
-                <p>volodiatutko12@gmail.com</p>
+                <h2 class="nickname">{{ current_user.username }}</h2>
+                <p>{{ current_user.email }}</p>
                 <p>Joined 18.07.2023</p>
               </div>
               <div class="info">
                 <p>Videos: 36</p>
                 <p>Subscribers: 122036</p>
-              </div> 
+              </div>
+
+
+            <form method="POST" action="" enctype="multipart/form-data">
+                {{ form.hidden_tag() }}
+                <h1>Account Info</h1>
+                <div class="flashed-message">
+                    {% with messages = get_flashed_messages(with_categories = true) %}
+                        {% if messages %}
+                            {% for category, message in messages %}
+                                <div class="alert alert-{{ category }}">
+                                    {{ message }}
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                    {% endwith %}
+                </div>
+                <div class="inputs">
+                    <div class="input">
+                        {{ form.username(id="username", placeholder="Username") }}
+                        <div>
+                            {% for error in form.username.errors %}
+                                <span class="error-message" style="color: red; font-size: 2px;">{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="input">
+                        {{ form.email(id="email", placeholder="Email") }}
+                        <div>
+                            {% for error in form.email.errors %}
+                                <span class="error-message" style="color: red; font-size: 2px;">{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="input">
+                        {{ form.picture.label() }}
+                        {{ form.picture }}
+                        {% if form.picture.errors %}
+                            {% for error in form.picture.errors %}
+                                <span>{{ error }}</span></br>
+                            {% endfor%}
+                        {% endif %}
+                    </div>
+                </div>
+
+
+
+                <div>
+                    {{ form.submit(class="signUp", type="submit", value="Update") }}
+                </div>
+            </form>
+        </form>
             </div>
             <div class="text-row">
               <button class="btn"><i class="fa-solid fa-chart-simple"></i> Statistics</button> 
@@ -86,14 +137,16 @@
               <button class="fa-solid fa-upload fa-9x"></button>
           </div>
           </div>
-    
+
+
           <hr class="line">
     
           <div class="for-videos">        
             
           </div>
-       </div>
-    
+        </div>
+
+
   </body>
-  <script src="profile-script.js"></script>
+  <script src="{{ url_for('static', filename='profile-script.js')}}"></script>
 </html>
