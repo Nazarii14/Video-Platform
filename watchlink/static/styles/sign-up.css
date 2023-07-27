@@ -86,8 +86,14 @@ button.ghost {
 	background: rgb(58,89,180);
     background: linear-gradient(50deg, rgba(58,89,180,0.43) 19%, rgba(29,199,253,0.33) 66%, rgba(69,252,176,0.215) 100%);
 }
+
 .signUp{
 	margin-top: 8px;
+}
+
+.signUp:hover{
+	background: rgb(218, 218, 218);
+	cursor: pointer;
 }
 
 .social{
@@ -195,6 +201,10 @@ input {
 	transition: transform 0.6s ease-in-out;
 }
 
+.ghost:hover{
+	background: #FF416C;
+	cursor: pointer;
+}
 
 .social-container {
 	margin: 15px 0;
